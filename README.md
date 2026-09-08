@@ -150,9 +150,12 @@ GEMINI_API_KEY=YOUR_GEMINI_API_KEY
 
 Replace `YOUR_GEMINI_API_KEY` with your Gemini API key.
 
-> ⚠️ Never upload your `.env` file or expose your API key publicly. Make sure `.env` is included in `.gitignore`.
-
 ---
+## Screenshoot
+<img width="821" height="430" alt="image" src="https://github.com/user-attachments/assets/af05c971-32b6-4ad9-91da-7e69076c2f5c" />
+<img width="481" height="437" alt="image" src="https://github.com/user-attachments/assets/dabbebf6-1833-4b43-8b26-1506a8e2de39" />
+<img width="524" height="434" alt="image" src="https://github.com/user-attachments/assets/4b7c1f37-82bb-49ef-82fc-c36abb8657d6" />
+<img width="488" height="431" alt="image" src="https://github.com/user-attachments/assets/3f0b0a6d-cf94-4618-b52f-2e23766a2c16" />
 
 ## ▶️ Run the Application
 
