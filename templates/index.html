@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>AI Travel Planner</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', path='style.css') }}"
+    >
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Header -->
+        <header class="hero">
+
+            <div class="hero-icon">
+                ✈️
+            </div>
+
+            <h1>AI Travel Planner</h1>
+
+            <p>
+                Create personalized travel itineraries
+                using Gemini Prompting Techniques
+            </p>
+
+        </header>
+
+
+        <!-- Main Card -->
+        <main class="card">
+
+            <form id="travelForm">
+
+                <!-- Name -->
+                <div class="form-group">
+
+                    <label for="name">
+                        👤 Your Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="e.g. Anmol"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Destination -->
+                <div class="form-group">
+
+                    <label for="destination">
+                        🌍 Destination
+                    </label>
+
+                    <input
+                        type="text"
+                        id="destination"
+                        name="destination"
+                        placeholder="e.g. Dubai"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Days + Budget -->
+                <div class="two-columns">
+
+                    <div class="form-group">
+
+                        <label for="days">
+                            📅 Number of Days
+                        </label>
+
+                        <input
+                            type="number"
+                            id="days"
+                            name="days"
+                            min="1"
+                            max="30"
+                            placeholder="e.g. 4"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="budget">
+                            💰 Budget (USD)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="budget"
+                            name="budget"
+                            min="1"
+                            step="0.01"
+                            placeholder="e.g. 800"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Interests -->
+                <div class="form-group">
+
+                    <label>
+                        ❤️ Interests
+                    </label>
+
+                    <div class="interest-grid">
+
+                        <label class="interest-option">
+                            <input
+                                type="checkbox"
+                                name="interests"
+                                value="Adventure"
+                            >
+                            <span>🏔️ Adventure</span>
+                        </label>
+
+
+                        <label class="interest-option">
+                            <input
+                                type="checkbox"
+                                name="interests"
+                                value="Food"
+                            >
+                            <span>🍔 Food</span>
+                        </label>
+
+
+                        <label class="interest-option">
+                            <input
+                                type="checkbox"
+                                name="interests"
+                                value="Nature"
+                            >
+                            <span>🌿 Nature</span>
+                        </label>
+
+
+                        <label class="interest-option">
+                            <input
+                                type="checkbox"
+                                name="interests"
+                                value="Shopping"
+                            >
+                            <span>🛍️ Shopping</span>
+                        </label>
+
+
+                        <label class="interest-option">
+                            <input
+                                type="checkbox"
+                                name="interests"
+                                value="History"
+                            >
+                            <span>🏛️ History</span>
+                        </label>
+
+
+                        <label class="interest-option">
+                            <input
+                                type="checkbox"
+                                name="interests"
+                                value="Beaches"
+                            >
+                            <span>🏖️ Beaches</span>
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Travel Style -->
+                <div class="form-group">
+
+                    <label for="travelStyle">
+                        🧳 Travel Style
+                    </label>
+
+                    <select
+                        id="travelStyle"
+                        name="travel_style"
+                        required
+                    >
+
+                        <option value="">
+                            Select travel style
+                        </option>
+
+                        <option value="Solo">
+                            Solo
+                        </option>
+
+                        <option value="Family">
+                            Family
+                        </option>
+
+                        <option value="Friends">
+                            Friends
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Prompting Technique -->
+                <div class="form-group">
+
+                    <label>
+                        🧠 Prompting Technique
+                    </label>
+
+                    <div class="technique-grid">
+
+                        <button
+                            type="button"
+                            class="technique-btn active"
+                            data-technique="zero-shot"
+                        >
+                            <strong>Zero-Shot</strong>
+                            <small>
+                                No examples
+                            </small>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="technique-btn"
+                            data-technique="few-shot"
+                        >
+                            <strong>Few-Shot</strong>
+                            <small>
+                                Uses examples
+                            </small>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="technique-btn"
+                            data-technique="structured"
+                        >
+                            <strong>Structured</strong>
+                            <small>
+                                Step-by-step planning
+                            </small>
+                        </button>
+
+                    </div>
+
+                    <input
+                        type="hidden"
+                        id="technique"
+                        value="zero-shot"
+                    >
+
+                </div>
+
+
+                <!-- Submit -->
+                <button
+                    type="submit"
+                    id="generateBtn"
+                    class="generate-btn"
+                >
+                    ✨ Generate Travel Plan
+                </button>
+
+            </form>
+
+
+            <!-- Loading -->
+            <div
+                id="loading"
+                class="loading hidden"
+            >
+
+                <div class="spinner"></div>
+
+                <p>
+                    Gemini is creating your travel plan...
+                </p>
+
+            </div>
+
+
+            <!-- Error -->
+            <div
+                id="error"
+                class="error hidden"
+            ></div>
+
+
+            <!-- Result -->
+            <section
+                id="result"
+                class="result hidden"
+            >
+
+                <div class="result-header">
+
+                    <h2>
+                        🗺️ Your Travel Plan
+                    </h2>
+
+                    <span
+                        id="resultTechnique"
+                        class="technique-badge"
+                    ></span>
+
+                </div>
+
+                <div
+                    id="itinerary"
+                    class="itinerary"
+                ></div>
+
+            </section>
+
+        </main>
+
+
+        <!-- Footer -->
+        <footer>
+
+            <p>
+                Powered by Google Gemini API
+            </p>
+
+            <p>
+                AI Travel Planner • Prompt Engineering Project
+            </p>
+
+        </footer>
+
+    </div>
+
+
+    <script
+        src="{{ url_for('static', path='script.js') }}"
+    ></script>
+
+</body>
+
+</html>
